@@ -5,16 +5,17 @@ import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.*;
 import io.restassured.response.Response;
-
+import static io.restassured.matcher.RestAssuredMatchers.*;
+import static org.hamcrest.Matchers.*;
 
 public class TestExamples
 {
 
-    @Test
-	public void test1_()
+ @Test	
+ public void test1_()
 {
 		 
-	     Response response=get("https://reqres.in/api/users?page=2");
+	     Response response=get("https://reqres.in/api/users?page=2");  
 	     
 	     System.out.println("response.getStatusCode()");
 	     System.out.println("response.getTime()");
@@ -30,7 +31,7 @@ public class TestExamples
 	  }
 	
     
-    @Test
+   @Test
     public void test2_()
     {  
     	baseURI="https://reqres.in/api";
@@ -38,14 +39,13 @@ public class TestExamples
       given().
              get("/users?page=2").
       then().
-          statusCode(200);
-    	
+          statusCode(200).
+            body("data[1].id",equalTo(8))
+    	    .log().all();
     }
 
 
-	private void statusCode(int i) {
-		// TODO Auto-generated method stub
-		
+	
 	}
     
     
@@ -60,4 +60,4 @@ public class TestExamples
     
     
     
-}
+
